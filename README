@@ -1,0 +1,13 @@
+This is the code related to the paper "The Western Record Industry Band Collaboration Network"
+
+It is the code we use to transform the original raw Discogs XML datasets into the final clean format we provide is also available without any limitation for re-use and modification.
+
+The data cleaning code is divided in two scripts that should be run sequentially according to the number in their filename. None of the scripts require parameters. All scripts are written and tested for Python 3.13. They implement the steps described in the Data Cleaning section. To successfully run these scripts, it is necessary to populate the raw_data subfolder in the code package with the Discogs XML files provided in the Methods section. One can provide more recent Discogs XML files than November 2025, but if they do the scripts are not tested and the auxilliary release_have_want.tsv file should be populated with the new release ids containing the release popularity data from the Discogs API -- a process also described in the Methods section.
+
+The first script creates the tripartite release-band-artist structure, connects each release with its attributes (music genre, style, label, year, success) as well as creating the canonical ids for bands, artists, and labels. The second script takes the tripartite structure and projects it to the band-band unipartite version, for every geographical region and year for which there is release information. Moreover, it generates the node attributes by aggregating all information from each band's releases, using the outputs of the previous script.
+
+The remaining scripts in this package are all scripts necessary to reproduce the entire analysis of the validation section.
+
+Scripts 02 and 03 take a long time to run and are independent, so they can be run in parallel, provided one has enough memory available. Script 04, however, depends on both 02 and 03 and can only be run after both complete.
+
+In order to successfully run the code, you will need the following Python packages: numpy, scipy, scikit-learn, pandas, torch, torch_geometric, networkx, and igraph.
